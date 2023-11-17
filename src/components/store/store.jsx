@@ -2,7 +2,9 @@ import { observable, action, makeObservable } from "mobx";
 
 class PostStore {
     posts = [];
+    createdPosts = [];
     showAddForm = false;
+    isLoading = 0;
     constructor() {
         makeObservable(this, {
             posts: observable,
@@ -10,6 +12,9 @@ class PostStore {
             addPost: action,
             showAddForm: observable,
             toggleShowAddForm: action,
+            isLoading: observable,
+            toggleLoading: action,
+            createdPosts: observable,
         });
     }
 
@@ -19,20 +24,31 @@ class PostStore {
                 "https://jsonplaceholder.typicode.com/posts"
             );
             const data = await response.json();
-            this.posts = data;
-            console.log(data);
+
+            this.toggleLoading();
+            setTimeout(
+                action(() => {
+                    this.posts = data;
+                    console.log(data);
+                    this.toggleLoading();
+                }, 5000)
+            );
         } catch (error) {
             console.error(error);
         }
     };
 
-    addPost = (post) => {
-        this.posts.push(post);
-    };
+    addPost = action((post) => {
+        this.createdPosts.push(post);
+    });
 
-    toggleShowAddForm = () => {
+    toggleShowAddForm = action(() => {
         this.showAddForm = !this.showAddForm;
-    };
+    });
+
+    toggleLoading = action(() => {
+        this.isLoading = !this.isLoading;
+    });
 }
 
 const postStore = new PostStore();

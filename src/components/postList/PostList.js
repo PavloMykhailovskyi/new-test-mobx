@@ -4,12 +4,14 @@ import postStore from "../store/store";
 import { Box, Grid, Typography } from "@mui/material";
 import { PostItem } from "../postItem/PostItem";
 import { AddButton } from "../button/Button";
+import { Loader } from "../loader/Loader";
 
 const PostList = observer(() => {
-    const { fetchPosts, posts, toggleShowAddForm } = postStore;
+    const { fetchPosts, posts, toggleShowAddForm, isLoading, createdPosts } =
+        postStore;
     useEffect(() => {
         fetchPosts();
-    }, []);
+    }, [fetchPosts]);
 
     return (
         <Box
@@ -23,14 +25,26 @@ const PostList = observer(() => {
             <AddButton onClick={() => toggleShowAddForm()}>
                 Create Post
             </AddButton>
-            <Typography variant="h2" component="h2" sx={{ mb: 4, mt: 2 }}>
-                Posts
-            </Typography>
-            <Grid container spacing={2}>
-                {posts.map(({ id, title, body }) => (
-                    <PostItem key={id} title={title} body={body} />
-                ))}
-            </Grid>
+            {isLoading > 0 ? (
+                <Loader />
+            ) : (
+                <>
+                    <Typography
+                        variant="h2"
+                        component="h2"
+                        sx={{ mb: 4, mt: 2 }}
+                    >
+                        Posts
+                    </Typography>
+                    <Grid container spacing={2}>
+                        {[...posts, ...createdPosts].map(
+                            ({ id, title, body }) => (
+                                <PostItem key={id} title={title} body={body} />
+                            )
+                        )}
+                    </Grid>
+                </>
+            )}
         </Box>
     );
 });
