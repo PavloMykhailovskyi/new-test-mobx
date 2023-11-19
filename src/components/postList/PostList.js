@@ -37,10 +37,10 @@ const PostList = observer(() => {
                         alignItems: 'center',
                     }}
                 >
-                    <Typography variant="h4" component="h2">
+                    <Typography variant="h4" component="h2" color="grey">
                         Loading
                     </Typography>
-                    <DotsLoader type={'bubbles'} color="111111" />
+                    <DotsLoader type={'bubbles'} color="grey" />
                 </Box>
             )}
             <Grid container spacing={2}>
