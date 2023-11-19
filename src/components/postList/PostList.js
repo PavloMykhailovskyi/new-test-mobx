@@ -7,8 +7,14 @@ import { AddButton } from '../button/Button';
 import { DotsLoader } from '../loader/Loader';
 
 const PostList = observer(() => {
-    const { fetchPosts, posts, toggleShowAddForm, isLoading, createdPosts } =
-        postStore;
+    const {
+        fetchPosts,
+        posts,
+        toggleShowAddForm,
+        isLoading,
+        createdPosts,
+        error,
+    } = postStore;
     useEffect(() => {
         fetchPosts();
     }, [fetchPosts]);
@@ -30,7 +36,7 @@ const PostList = observer(() => {
                     Posts
                 </Typography>
             </>
-            {isLoading && (
+            {isLoading && !error && (
                 <Box
                     sx={{
                         display: 'flex',

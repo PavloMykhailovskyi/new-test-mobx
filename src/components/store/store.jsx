@@ -1,10 +1,11 @@
-import { observable, action, makeObservable } from "mobx";
+import { observable, action, makeObservable } from 'mobx';
 
 class PostStore {
     posts = [];
     createdPosts = [];
     showAddForm = false;
     isLoading = false;
+    error = false;
     constructor() {
         makeObservable(this, {
             posts: observable,
@@ -15,13 +16,15 @@ class PostStore {
             isLoading: observable,
             toggleLoading: action,
             createdPosts: observable,
+            error: observable,
+            toggleError: action,
         });
     }
 
     fetchPosts = async () => {
         try {
             const response = await fetch(
-                "https://jsonplaceholder.typicode.com/posts"
+                'https://jsonplaceholder.typicode.com/posts'
             );
             const data = await response.json();
 
@@ -35,11 +38,11 @@ class PostStore {
                 5000
             );
         } catch (error) {
-            console.error(error);
+            this.toggleError();
         }
     };
 
-    addPost = action((post) => {
+    addPost = action(post => {
         this.createdPosts.push(post);
     });
 
@@ -49,6 +52,10 @@ class PostStore {
 
     toggleLoading = action(() => {
         this.isLoading = !this.isLoading;
+    });
+
+    toggleError = action(() => {
+        this.error = !this.error;
     });
 }
 
