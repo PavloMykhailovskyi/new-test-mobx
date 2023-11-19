@@ -1,15 +1,5 @@
-import { Box, CircularProgress } from "@mui/material";
+import ReactLoading from 'react-loading';
 
-export const Loader = () => {
-    return (
-        <Box
-            sx={{
-                display: "flex",
-                mt: 5,
-                height: "100vh",
-            }}
-        >
-            <CircularProgress />
-        </Box>
-    );
-};
+export const DotsLoader = ({ type, color }) => (
+    <ReactLoading type={type} color={color} />
+);

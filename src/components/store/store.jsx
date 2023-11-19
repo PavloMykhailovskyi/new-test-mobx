@@ -4,7 +4,7 @@ class PostStore {
     posts = [];
     createdPosts = [];
     showAddForm = false;
-    isLoading = 0;
+    isLoading = false;
     constructor() {
         makeObservable(this, {
             posts: observable,
@@ -31,7 +31,8 @@ class PostStore {
                     this.posts = data;
                     console.log(data);
                     this.toggleLoading();
-                }, 5000)
+                }),
+                5000
             );
         } catch (error) {
             console.error(error);
