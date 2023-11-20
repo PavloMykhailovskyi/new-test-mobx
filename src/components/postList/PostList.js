@@ -36,19 +36,7 @@ const PostList = observer(() => {
                     Posts
                 </Typography>
             </>
-            {isLoading && !error && (
-                <Box
-                    sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                    }}
-                >
-                    <Typography variant="h4" component="h2" color="grey">
-                        Loading
-                    </Typography>
-                    <DotsLoader type={'bubbles'} color="grey" />
-                </Box>
-            )}
+            <DotsLoader />
             <Grid container spacing={2}>
                 {[...posts, ...createdPosts].map(item => (
                     <PostItem item={item} />
