@@ -36,7 +36,7 @@ const PostList = observer(() => {
                     Posts
                 </Typography>
             </>
-            <DotsLoader />
+            {isLoading && !error && <DotsLoader />}
             <Grid container spacing={2}>
                 {[...posts, ...createdPosts].map(item => (
                     <PostItem item={item} />
